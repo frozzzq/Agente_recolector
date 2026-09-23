@@ -62,3 +62,15 @@ def quedan_paquetes():
             return True
     return False
 
+def mostrar_entorno(accion):
+    print("Accion", acciones, "->", accion,
+          "| posicion:", tuple(posicion_agente), "| puntuacion:", puntuacion)
+    for f in range(len(entorno)):
+        linea = ""
+        for c in range(len(entorno[f])):
+            if [f, c] == posicion_agente:
+                linea += "A "
+            else:
+                linea += entorno[f][c] + " "
+        print(linea)
+    print()
