@@ -74,3 +74,27 @@ def mostrar_entorno(accion):
                 linea += entorno[f][c] + " "
         print(linea)
     print()
+
+def contenido(f, c):
+    """Sensor de una celda: dice que hay en (f, c)."""
+    if f < 0 or f >= len(entorno) or c < 0 or c >= len(entorno[0]):
+        return "FUERA_DEL_TABLERO"
+    if entorno[f][c] == "P":
+        return "PAQUETE"
+    if entorno[f][c] == "X":
+        return "OBSTACULO"
+    return "VACIA"
+
+
+def percibir():
+    """Obtiene lo que el agente puede sentir en este turno."""
+    f, c = posicion_agente
+    return {
+        "posicion": (f, c),
+        "actual": contenido(f, c),
+        "arriba": contenido(f - 1, c),
+        "abajo": contenido(f + 1, c),
+        "izquierda": contenido(f, c - 1),
+        "derecha": contenido(f, c + 1),
+    }
+
