@@ -27,15 +27,38 @@ P X . X .
 """,
 }
 
-import random
+MAX_ACCIONES = 50
+DIRECCIONES = ["ARRIBA", "DERECHA", "ABAJO", "IZQUIERDA"] 
+CAMBIO = {"ARRIBA": (-1, 0), "DERECHA": (0, 1), "ABAJO": (1, 0), "IZQUIERDA": (0, -1)}
 
-FILAS = 5
-COLUMNAS = 5
-AGENTE = 'A'
-elementos = ['.', 'P', 'X']
-pesos = [0.70, 0.15, 0.15]
+entorno = []
+posicion_agente = [0, 0]
+puntuacion = 0
+acciones = 0
+movimientos = 0
+penalizaciones = 0
+paquetes_recogidos = 0
+visitas = {}         
 
-map = [[random.choices(elementos, weights=pesos)[0] for i in range(COLUMNAS)] for i in range(FILAS)]
+def cargar_escenario(texto):
+    global entorno, posicion_agente, puntuacion, acciones, movimientos
+    global penalizaciones, paquetes_recogidos, visitas
+    entorno = [linea.split() for linea in texto.strip().split("\n")]
+    for f in range(len(entorno)):
+        for c in range(len(entorno[f])):
+            if entorno[f][c] == "A":
+                posicion_agente = [f, c]
+                entorno[f][c] = "."    
+    puntuacion = 0
+    acciones = 0
+    movimientos = 0
+    penalizaciones = 0
+    paquetes_recogidos = 0
+    visitas = {}
 
-for fila in map:
-    print(fila)
+def quedan_paquetes():
+    for fila in entorno:
+        if "P" in fila:
+            return True
+    return False
+
